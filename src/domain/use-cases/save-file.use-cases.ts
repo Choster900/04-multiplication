@@ -38,8 +38,8 @@ export class SaveFile implements SaveFileUseCase {
             
             return true;
         } catch (error) {
-            console.log(error);
-            
+            //console.log(error); !Save error in windston
+
             return false;
         }
 
