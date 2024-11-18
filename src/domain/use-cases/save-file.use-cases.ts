@@ -1,4 +1,5 @@
 import fs from 'fs';
+import path from 'path';
 
 export interface SaveFileUseCase {
     execute: (options: SaveFileOptions) => boolean;
@@ -19,22 +20,30 @@ export class SaveFile implements SaveFileUseCase {
          */
     ) { }
 
-    execute(options: SaveFileOptions): boolean {
+    execute({
+        content,
+        fileName = 'table.txt',
+        filePath = 'outputs'
+    }: SaveFileOptions): boolean {
 
-        const OUTPUT_DIR = 'outputs';
-        const FILE_NAME = `tabla-${BASE}-hasta-${LIMIT}.txt`;
+        try {
 
-        if (!fs.existsSync(OUTPUT_DIR)) {
-            fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+            if (!fs.existsSync(filePath)) {
+                fs.mkdirSync(filePath, { recursive: true });
+            }
+
+            const pathFile = path.join(filePath, fileName + '.txt');
+            fs.writeFileSync(pathFile, content);
+
+            
+            return true;
+        } catch (error) {
+            console.log(error);
+            
+            return false;
         }
 
-        const filePath = path.join(OUTPUT_DIR, FILE_NAME);
-        fs.writeFileSync(filePath, headerContent);
 
-        const data = fs.readFileSync(filePath, 'utf8');
-        return true;
-
-        return true;
     };
 
 

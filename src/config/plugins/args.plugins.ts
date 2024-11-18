@@ -20,8 +20,19 @@ export const yarg = yargs(hideBin(process.argv) )
         default: false,
         description: 'Show multiplication table',
     })
+    .option('n',{
+        alias: 'name',
+        type: 'string',
+        default: 'table',
+        description: 'File name',
+    })
+    .option('d',{
+        alias: 'destination',
+        type:'string',
+        default: 'outputs',
+        description: 'Fuke destination',
+    })
     .check(( argv, options) => {
-       // console.log({ argv , options});
 
         if ( argv.b < 0)  throw 'Error base must be a positive number'
         
